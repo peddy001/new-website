@@ -243,10 +243,727 @@
     </div>
 
     <script>
-        // All JavaScript from the previous version goes here...
-        // This includes the main DOMContentLoaded event listener and all functions.
-        // A new script to register the service worker will be added below this one.
-        document.addEventListener('DOMContentLoaded',()=>{const e=new Intl.NumberFormat('en-KE',{style:'currency',currency:'KSH',minimumFractionDigits:0}),t=[{text:"The secret of getting ahead is getting started.",author:"Mark Twain"},{text:"The journey of a thousand miles begins with a single step.",author:"Lao Tzu"},{text:"Commit your works to the LORD, and your thoughts will be established.",author:"Proverbs 16:3"},{text:"Believe you can and you're halfway there.",author:"Theodore Roosevelt"},{text:"The best time to plant a tree was 20 years ago. The second best time is now.",author:"Chinese Proverb"}],n=[{text:"For I know the plans I have for you, declares the LORD, plans for welfare and not for evil, to give you a future and a hope.",ref:"Jeremiah 29:11"},{text:"Trust in the LORD with all your heart, and do not lean on your own understanding.",ref:"Proverbs 3:5"},{text:"I can do all things through him who strengthens me.",ref:"Philippians 4:13"},{text:"The steadfast love of the LORD never ceases; his mercies never come to an end; they are new every morning; great is your faithfulness.",ref:"Lamentations 3:22-23"}];let a,i,o,r,s,l,d;const c={settings:{theme:"light",liteMode:!1},startDate:"2025-08-22",startAge:24,finances:{totalSavings:0,income:0,expenses:0,history:[]},goals:[{id:1,text:"Finish ICT Diploma",date:"2026-04-30",complete:!1},{id:2,text:"Job Hunt + Savings Phase",date:"2027-12-31",complete:!1},{id:3,text:"Build 2-Bedroom House",date:"2028-12-31",complete:!1},{id:4,text:"Farm Setup (Crops & Livestock)",date:"2029-12-31",complete:!1},{id:5,text:"Expand Business (Shop, Agrovet, etc.)",date:"2030-12-31",complete:!1}],habits:{"wake-early":{lastChecked:null,streak:0},"prayer-meditation":{lastChecked:null,streak:0},exercise:{lastChecked:null,streak:0},"ict-learning":{lastChecked:null,streak:0},"journal-review":{lastChecked:null,streak:0},"track-spending":{lastChecked:null},"review-goals":{lastChecked:null},"savings-update":{lastChecked:null}},journal:{},affirmation:""},u=[{id:"wake-early",name:"Wake Early"},{id:"prayer-meditation",name:"Prayer / Meditation"},{id:"exercise",name:"Exercise"},{id:"ict-learning",name:"ICT Learning / Practice"},{id:"journal-review",name:"Journal & Review"}],m=[{id:"track-spending",name:"Track Spending"},{id:"review-goals",name:"Review Goals"},{id:"savings-update",name:"Savings Update"}];function p(){localStorage.setItem("lifeOSData",JSON.stringify(a))}function h(){const e=localStorage.getItem("lifeOSData");a=e?JSON.parse(e):JSON.parse(JSON.stringify(c)),a.settings={...c.settings,...a.settings},a.goals=a.goals||c.goals,a.habits={...c.habits,...a.habits}}function g(){const e=document.getElementById("theme-toggle");"dark"===a.settings.theme?(document.documentElement.setAttribute("data-theme","dark"),e.checked=!0):(document.documentElement.setAttribute("data-theme","light"),e.checked=!1),e.addEventListener("change",()=>{e.checked?(a.settings.theme="dark",document.documentElement.setAttribute("data-theme","dark")):(a.settings.theme="light",document.documentElement.setAttribute("data-theme","light")),b(),p()})}function f(){const e=document.querySelectorAll(".nav-link"),t=document.querySelectorAll(".page");e.forEach(n=>{n.addEventListener("click",a=>{a.preventDefault();const i=n.getAttribute("href").substring(1);e.forEach(e=>e.classList.remove("active")),n.classList.add("active"),t.forEach(e=>{e.id===i?e.classList.add("active"):e.classList.remove("active")}),"calendar"===i&&o&&o.render(),"land"===i&&s&&v()})})}function y(){const e=new Date,n=t[e.getDate()%t.length];document.getElementById("quote-text").textContent=`"${n.text}"`,document.getElementById("quote-author").textContent=`— ${n.author}`,w()}function w(){k("total-savings-display",a.finances.totalSavings,!0),k("monthly-income-display",a.finances.income,!0),k("monthly-expenses-display",a.finances.expenses,!0);const e=x();document.getElementById("discipline-score-display").textContent=`${e.toFixed(0)}%`;const t=a.goals.filter(e=>e.complete).length,n=a.goals.length,i=n>0?t/n*100:0;document.getElementById("timeline-progress-bar").style.width=`${i}%`}function k(t,n,a=!1){const i=document.getElementById(t),o=parseFloat(i.textContent.replace(/[^\d.-]/g,""))||0;let r=null;!function s(l){null===r&&(r=l);const d=Math.min((l-r)/1e3,1),c=o+(n-o)*d;i.textContent=a?e.format(c):c.toFixed(0),d<1&&requestAnimationFrame(s)}(performance.now())}function v(){const e=document.getElementById("three-container");e&&r&&(r.aspect=e.clientWidth/e.clientHeight,r.updateProjectionMatrix(),s.setSize(e.clientWidth,e.clientHeight),l.setSize(e.clientWidth,e.clientHeight))}function x(){const e=(new Date).toISOString().split("T")[0],t=S(new Date).toString();let n=0;return u.forEach(t=>{a.habits[t.id].lastChecked===e&&n++}),m.forEach(e=>{a.habits[e.id].lastChecked===t&&n++}),u.length+m.length>0?n/(u.length+m.length)*100:0}function S(e){e=new Date(Date.UTC(e.getFullYear(),e.getMonth(),e.getDate())),e.setUTCDate(e.getUTCDate()+4-(e.getUTCDay()||7));var t=new Date(Date.UTC(e.getUTCFullYear(),0,1));return Math.ceil(((e-t)/864e5+1)/7)}function b(){if(!i)return;const e=a.settings.theme||"light",t="dark"===e?"rgba(255, 255, 255, 0.1)":"rgba(0, 0, 0, 0.1)",n="dark"===e?"#cdd9e5":"#2c3e50",o="dark"===e?"rgba(88, 166, 255, 1)":"rgba(52, 152, 219, 1)",r="dark"===e?"rgba(88, 166, 255, 0.2)":"rgba(52, 152, 219, 0.2)";i.options.scales={y:{ticks:{color:n},grid:{color:t}},x:{ticks:{color:n},grid:{color:t}}},i.options.plugins.legend={labels:{color:n}},i.data.datasets[0].borderColor=o,i.data.datasets[0].backgroundColor=r,i.update()}function L(){const e=document.getElementById("lite-mode-toggle");e.checked=a.settings.liteMode,e.addEventListener("change",()=>{a.settings.liteMode=e.checked,p(),alert("Setting saved. Please refresh the page for the change to take effect.")}),document.getElementById("export-data-btn").addEventListener("click",C),document.getElementById("import-file-input").addEventListener("change",E),document.getElementById("reset-data-btn").addEventListener("click",D)}function C(){const e=JSON.stringify(a,null,2),t=new Blob([e],{type:"application/json"}),n=URL.createObjectURL(t),i=document.createElement("a");i.href=n,i.download=`LifeOS_Backup_${(new Date).toISOString().split("T")[0]}.json`,document.body.appendChild(i),i.click(),document.body.removeChild(i),URL.revokeObjectURL(n)}function E(e){const t=e.target.files[0];if(!t)return;const n=new FileReader;n.onload=function(e){try{const t=JSON.parse(e.target.result);confirm("Are you sure you want to overwrite all current data with the imported file?")&&(a=t,p(),location.reload())}catch(e){alert("Error parsing JSON file. Please ensure it is a valid backup.")}},n.readAsText(t)}function D(){confirm("Are you absolutely sure? This will delete all your progress permanently.")&&(localStorage.removeItem("lifeOSData"),location.reload())}const T=document.getElementById("milestone-modal"),M=document.getElementById("modal-close-btn");M.onclick=function(){T.style.display="none"},window.onclick=function(e){e.target==T&&(T.style.display="none")},h(),g(),f(),y(),function(){const e=document.getElementById("timeline-list");e.innerHTML="",a.goals.sort((e,t)=>new Date(e.date)-new Date(t.date)),a.goals.forEach(t=>{const n=function(e){const t=new Date(a.startDate);t.setFullYear(t.getFullYear()-a.startAge);const n=new Date(e);let i=n.getFullYear()-t.getFullYear();const o=n.getMonth()-t.getMonth();return(o<0||0===o&&n.getDate()<t.getDate())&&i--,i}(t.date),i=document.createElement("li");i.className=`timeline-item ${t.complete?"complete":""}`,i.innerHTML=`\n                    <div class="icon"><i class="fas ${t.complete?"fa-check":"fa-flag-checkered"}"></i></div>\n                    <div class="timeline-content">\n                        <h4>${t.text}</h4>\n                        <div class="meta">\n                            <span>Target: ${new Date(t.date).toLocaleDateString()}</span> | \n                            <span>Age: ${n}</span>\n                        </div>\n                        <button class="btn-toggle-complete" data-id="${t.id}">${t.complete?"Mark as Incomplete":"Mark as Complete"}</button>\n                    </div>\n                `,e.appendChild(i)}),document.querySelectorAll(".btn-toggle-complete").forEach(e=>{e.addEventListener("click",e=>{!function(e){const t=a.goals.find(t=>t.id===e);t&&(t.complete=!t.complete,t.complete&&function(e){document.getElementById("modal-message").textContent=`Congratulations on completing: ${e}! Keep up the great work.`,T.style.display="flex"}(`"${t.text}"`),p(),function(){const e=document.getElementById("timeline-list");e.innerHTML="",a.goals.sort((e,t)=>new Date(e.date)-new Date(t.date)),a.goals.forEach(t=>{const n=function(e){const t=new Date(a.startDate);t.setFullYear(t.getFullYear()-a.startAge);const n=new Date(e);let i=n.getFullYear()-t.getFullYear();const o=n.getMonth()-t.getMonth();return(o<0||0===o&&n.getDate()<t.getDate())&&i--,i}(t.date),i=document.createElement("li");i.className=`timeline-item ${t.complete?"complete":""}`,i.innerHTML=`\n                    <div class="icon"><i class="fas ${t.complete?"fa-check":"fa-flag-checkered"}"></i></div>\n                    <div class="timeline-content">\n                        <h4>${t.text}</h4>\n                        <div class="meta">\n                            <span>Target: ${new Date(t.date).toLocaleDateString()}</span> | \n                            <span>Age: ${n}</span>\n                        </div>\n                        <button class="btn-toggle-complete" data-id="${t.id}">${t.complete?"Mark as Incomplete":"Mark as Complete"}</button>\n                    </div>\n                `,e.appendChild(i)}),document.querySelectorAll(".btn-toggle-complete").forEach(e=>{e.addEventListener("click",e=>{t(parseInt(e.target.dataset.id))})})}(),w(),G())}(parseInt(e.target.dataset.id))})})}(),document.getElementById("add-goal-btn").addEventListener("click",function(){const e=document.getElementById("new-goal-text"),t=document.getElementById("new-goal-date");if(""===e.value.trim()||""===t.value)return void alert("Please provide both a goal description and a target date.");const n={id:Date.now(),text:e.value.trim(),date:t.value,complete:!1};a.goals.push(n),p(),function(){const e=document.getElementById("timeline-list");e.innerHTML="",a.goals.sort((e,t)=>new Date(e.date)-new Date(t.date)),a.goals.forEach(t=>{const n=function(e){const t=new Date(a.startDate);t.setFullYear(t.getFullYear()-a.startAge);const n=new Date(e);let i=n.getFullYear()-t.getFullYear();const o=n.getMonth()-t.getMonth();return(o<0||0===o&&n.getDate()<t.getDate())&&i--,i}(t.date),i=document.createElement("li");i.className=`timeline-item ${t.complete?"complete":""}`,i.innerHTML=`\n                    <div class="icon"><i class="fas ${t.complete?"fa-check":"fa-flag-checkered"}"></i></div>\n                    <div class="timeline-content">\n                        <h4>${t.text}</h4>\n                        <div class="meta">\n                            <span>Target: ${new Date(t.date).toLocaleDateString()}</span> | \n                            <span>Age: ${n}</span>\n                        </div>\n                        <button class="btn-toggle-complete" data-id="${t.id}">${t.complete?"Mark as Incomplete":"Mark as Complete"}</button>\n                    </div>\n                `,e.appendChild(i)}),document.querySelectorAll(".btn-toggle-complete").forEach(e=>{e.addEventListener("click",e=>{t(parseInt(e.target.dataset.id))})})}(),G(),e.value="",t.value=""}),function(){const t=document.getElementById("income-input"),n=document.getElementById("expenses-input");t.value=a.finances.income||"",n.value=a.finances.expenses||"",t.addEventListener("input",i),n.addEventListener("input",i),document.getElementById("update-savings-btn").addEventListener("click",function(){const t=document.getElementById("savings-update-input"),n=parseFloat(t.value);if(isNaN(n)||n<=0)return void alert("Please enter a valid, positive amount.");a.finances.totalSavings+=n;const i=`${(new Date).getFullYear()}-${String((new Date).getMonth()+1).padStart(2,"0")}`,o=a.finances.history.find(e=>e.month===i);o?o.amount+=n:a.finances.history.push({month:i,amount:n}),p(),w(),function(){a.finances.history.sort((e,t)=>e.month.localeCompare(t.month)),i.data.labels=a.finances.history.map(e=>e.month),i.data.datasets[0].data=a.finances.history.map(e=>e.amount),b(),i.update()}(),t.value=""}),function(){const e=document.getElementById("savings-chart").getContext("2d");i=new Chart(e,{type:"line",data:{labels:[],datasets:[{label:"Monthly Savings (KSH)",data:[],tension:.4,fill:!0}]},options:{responsive:!0,scales:{},plugins:{}}}),function(){a.finances.history.sort((e,t)=>e.month.localeCompare(t.month)),i.data.labels=a.finances.history.map(e=>e.month),i.data.datasets[0].data=a.finances.history.map(e=>e.amount),b(),i.update()}()}(),i()}(),function(){const e=document.getElementById("daily-habits-list"),t=document.getElementById("weekly-habits-list");e.innerHTML="",t.innerHTML="";const n=(new Date).toISOString().split("T")[0];u.forEach(t=>{const i=a.habits[t.id],o=i.lastChecked===n,r=document.createElement("li");r.className="habit-item",r.innerHTML=`\n                    <label>\n                        <input type="checkbox" data-habit-id="${t.id}" data-type="daily" ${o?"checked":""}>\n                        <span>${t.name}</span>\n                    </label>\n                    <span class="streak">${i.streak||0} day streak 🔥</span>\n                `,e.appendChild(r)});const i=S(new Date);m.forEach(e=>{const n=a.habits[e.id],o=n.lastChecked===i.toString(),r=document.createElement("li");r.className="habit-item",r.innerHTML=`\n                    <label>\n                        <input type="checkbox" data-habit-id="${e.id}" data-type="weekly" ${o?"checked":""}>\n                        <span>${e.name}</span>\n                    </label>\n                `,t.appendChild(r)}),document.querySelectorAll('#discipline input[type="checkbox"]').forEach(e=>{e.addEventListener("change",function(e){const t=e.target.dataset.habitId,n=e.target.dataset.type,i=a.habits[t];if("daily"===n){const n=(new Date).toISOString().split("T")[0],o=new Date,r=new Date(o);r.setDate(o.getDate()-1);const s=r.toISOString().split("T")[0];e.target.checked?(i.lastChecked=n,i.lastChecked===s?i.streak++:i.streak=1):(i.lastChecked=null,i.streak=0)}else{const t=S(new Date).toString();e.target.checked?i.lastChecked=t:i.lastChecked=null}p(),function(){const e=document.getElementById("daily-habits-list"),t=document.getElementById("weekly-habits-list");e.innerHTML="",t.innerHTML="";const n=(new Date).toISOString().split("T")[0];u.forEach(t=>{const i=a.habits[t.id],o=i.lastChecked===n,r=document.createElement("li");r.className="habit-item",r.innerHTML=`\n                    <label>\n                        <input type="checkbox" data-habit-id="${t.id}" data-type="daily" ${o?"checked":""}>\n                        <span>${t.name}</span>\n                    </label>\n                    <span class="streak">${i.streak||0} day streak 🔥</span>\n                `,e.appendChild(r)});const i=S(new Date);m.forEach(e=>{const n=a.habits[e.id],o=n.lastChecked===i.toString(),r=document.createElement("li");r.className="habit-item",r.innerHTML=`\n                    <label>\n                        <input type="checkbox" data-habit-id="${e.id}" data-type="weekly" ${o?"checked":""}>\n                        <span>${e.name}</span>\n                    </label>\n                `,t.appendChild(r)}),document.querySelectorAll('#discipline input[type="checkbox"]').forEach(e=>{e.addEventListener("change",i)})}(),w()})})}(),function(){const e=new Date,t=n[e.getDate()%n.length];document.getElementById("verse-text").textContent=`"${t.text}"`,document.getElementById("verse-ref").textContent=t.ref;const i=document.getElementById("journal-entry"),o=(new Date).toISOString().split("T")[0];i.value=a.journal[o]||"",i.addEventListener("input",()=>{a.journal[o]=i.value,p()});const r=document.getElementById("affirmation-input");r.value=a.affirmation||"",document.getElementById("save-affirmation-btn").addEventListener("click",()=>{a.affirmation=r.value,p(),alert("Affirmation saved!")})}(),function(){const e=document.getElementById("calendar");o=new FullCalendar.Calendar(e,{initialView:"dayGridMonth",headerToolbar:{left:"prev,next today",center:"title",right:"dayGridMonth,timeGridWeek,listWeek"},events:[],editable:!0,selectable:!0,select:function(e){let t=prompt("Enter a title for your new event:");t&&(a.goals.push({id:Date.now(),text:t,date:e.startStr,complete:!1}),p(),function(){const e=document.getElementById("timeline-list");e.innerHTML="",a.goals.sort((e,t)=>new Date(e.date)-new Date(t.date)),a.goals.forEach(t=>{const n=function(e){const t=new Date(a.startDate);t.setFullYear(t.getFullYear()-a.startAge);const n=new Date(e);let i=n.getFullYear()-t.getFullYear();const o=n.getMonth()-t.getMonth();return(o<0||0===o&&n.getDate()<t.getDate())&&i--,i}(t.date),i=document.createElement("li");i.className=`timeline-item ${t.complete?"complete":""}`,i.innerHTML=`\n                    <div class="icon"><i class="fas ${t.complete?"fa-check":"fa-flag-checkered"}"></i></div>\n                    <div class="timeline-content">\n                        <h4>${t.text}</h4>\n                        <div class="meta">\n                            <span>Target: ${new Date(t.date).toLocaleDateString()}</span> | \n                            <span>Age: ${n}</span>\n                        </div>\n                        <button class="btn-toggle-complete" data-id="${t.id}">${t.complete?"Mark as Incomplete":"Mark as Complete"}</button>\n                    </div>\n                `,e.appendChild(i)}),document.querySelectorAll(".btn-toggle-complete").forEach(e=>{e.addEventListener("click",e=>{t(parseInt(e.target.dataset.id))})})}(),G()),o.unselect()},eventClick:function(e){confirm(`Do you want to delete the event '${e.event.title}'?`)&&(a.goals=a.goals.filter(t=>t.id!=e.event.id),p(),function(){const e=document.getElementById("timeline-list");e.innerHTML="",a.goals.sort((e,t)=>new Date(e.date)-new Date(t.date)),a.goals.forEach(t=>{const n=function(e){const t=new Date(a.startDate);t.setFullYear(t.getFullYear()-a.startAge);const n=new Date(e);let i=n.getFullYear()-t.getFullYear();const o=n.getMonth()-t.getMonth();return(o<0||0===o&&n.getDate()<t.getDate())&&i--,i}(t.date),i=document.createElement("li");i.className=`timeline-item ${t.complete?"complete":""}`,i.innerHTML=`\n                    <div class="icon"><i class="fas ${t.complete?"fa-check":"fa-flag-checkered"}"></i></div>\n                    <div class="timeline-content">\n                        <h4>${t.text}</h4>\n                        <div class="meta">\n                            <span>Target: ${new Date(t.date).toLocaleDateString()}</span> | \n                            <span>Age: ${n}</span>\n                        </div>\n                        <button class="btn-toggle-complete" data-id="${t.id}">${t.complete?"Mark as Incomplete":"Mark as Complete"}</button>\n                    </div>\n                `,e.appendChild(i)}),document.querySelectorAll(".btn-toggle-complete").forEach(e=>{e.addEventListener("click",e=>{t(parseInt(e.target.dataset.id))})})}(),G())},eventDrop:N,eventResize:N}),G()}(),a.settings.liteMode?!document.getElementById("three-container").innerHTML=`<p style="padding: 2rem; text-align: center; color: var(--text-secondary);">\n                        <i class="fas fa-leaf" style="font-size: 2rem; margin-bottom: 1rem;"></i><br>\n                        3D Visualization is disabled in Lite Mode to improve performance.\n                    </p>`:function(){const e=document.getElementById("three-container");if(!e)return;e.innerHTML="";(d=new THREE.Scene).background=new THREE.Color("dark"===a.settings.theme?2e3a40:16021498),r=new THREE.PerspectiveCamera(75,e.clientWidth/e.clientHeight,.1,1e3),r.position.set(10,15,20),s=new THREE.WebGLRenderer({antialias:!0}),s.setSize(e.clientWidth,e.clientHeight),e.appendChild(s.domElement),(l=new THREE.CSS2DRenderer).setSize(e.clientWidth,e.clientHeight),l.domElement.style.position="absolute",l.domElement.style.top="0px",e.appendChild(l.domElement);const t=new THREE.OrbitControls(r,l.domElement);t.enableDamping=!0;const n=new THREE.AmbientLight(16777215,.7);d.add(n);const i=new THREE.DirectionalLight(16777215,.8);i.position.set(5,10,7.5),d.add(i);const o=new THREE.MeshStandardMaterial({color:5933626}),c=new THREE.PlaneGeometry(30,15),u=new THREE.Mesh(c,o);u.rotation.x=-Math.PI/2,d.add(u),function(e,t,n,a,i,o){const r=new THREE.BoxGeometry(n,2,a),s=new THREE.MeshStandardMaterial({color:i,transparent:!0,opacity:.8}),l=new THREE.Mesh(r,s);l.position.set(e,1,t),d.add(l);const c=document.createElement("div");c.className="label",c.textContent=o;const u=new THREE.CSS2DObject(c);u.position.set(0,2,0),l.add(u)}(0,-6,30,3,15158332,"Business Zone"),function(e,t,n,a,i,o){const r=new THREE.BoxGeometry(n,2,a),s=new THREE.MeshStandardMaterial({color:i,transparent:!0,opacity:.8}),l=new THREE.Mesh(r,s);l.position.set(e,1,t),d.add(l);const c=document.createElement("div");c.className="label",c.textContent=o;const u=new THREE.CSS2DObject(c);u.position.set(0,2,0),l.add(u)}(0,-1.5,10,6,3447003,"Home Zone"),function(e,t,n,a,i,o){const r=new THREE.BoxGeometry(n,2,a),s=new THREE.MeshStandardMaterial({color:i,transparent:!0,opacity:.8}),l=new THREE.Mesh(r,s);l.position.set(e,1,t),d.add(l);const c=document.createElement("div");c.className="label",c.textContent=o;const u=new THREE.CSS2DObject(c);u.position.set(0,2,0),l.add(u)}(-7.5,4.5,15,6,3001339,"Crops"),function(e,t,n,a,i,o){const r=new THREE.BoxGeometry(n,2,a),s=new THREE.MeshStandardMaterial({color:i,transparent:!0,opacity:.8}),l=new THREE.Mesh(r,s);l.position.set(e,1,t),d.add(l);const c=document.createElement("div");c.className="label",c.textContent=o;const u=new THREE.CSS2DObject(c);u.position.set(0,2,0),l.add(u)}(7.5,4.5,15,6,15964178,"Livestock"),function e(){requestAnimationFrame(e),t.update(),s.render(d,r),l.render(d,r)}(),window.addEventListener("resize",v,!1)}(),L();function i(){const t=parseFloat(document.getElementById("income-input").value)||0,n=parseFloat(document.getElementById("expenses-input").value)||0;a.finances.income=t,a.finances.expenses=n;const i=t-n;document.getElementById("monthly-savings-result").textContent=e.format(i>0?i:0),document.getElementById("budget-needs").textContent=e.format(.7*t),document.getElementById("budget-savings").textContent=e.format(.2*t),document.getElementById("budget-wants").textContent=e.format(.1*t),w(),p()}function N(e){const t=a.goals.find(t=>t.id==e.event.id);t&&(t.date=e.event.start.toISOString().split("T")[0],p(),O())}function G(){if(!o)return;const e=a.goals.map(e=>({id:e.id,title:e.text,start:e.date,allDay:!0,backgroundColor:e.complete?"#2ecc71":"#3498db",borderColor:e.complete?"#27ae60":"#2980b9"}));o.removeAllEvents(),o.addEventSource(e)}});
+        // ** CORRECTED JAVASCRIPT - Un-minified and readable **
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- GLOBAL VARIABLES & CONSTANTS ---
+            const KSH_FORMATTER = new Intl.NumberFormat('en-KE', { style: 'currency', currency: 'KSH', minimumFractionDigits: 0 });
+            const DAILY_QUOTES = [
+                { text: "The secret of getting ahead is getting started.", author: "Mark Twain" },
+                { text: "The journey of a thousand miles begins with a single step.", author: "Lao Tzu" },
+                { text: "Commit your works to the LORD, and your thoughts will be established.", author: "Proverbs 16:3" },
+                { text: "Believe you can and you're halfway there.", author: "Theodore Roosevelt" },
+                { text: "The best time to plant a tree was 20 years ago. The second best time is now.", author: "Chinese Proverb" }
+            ];
+            const DAILY_VERSES = [
+                { text: "For I know the plans I have for you, declares the LORD, plans for welfare and not for evil, to give you a future and a hope.", ref: "Jeremiah 29:11" },
+                { text: "Trust in the LORD with all your heart, and do not lean on your own understanding.", ref: "Proverbs 3:5" },
+                { text: "I can do all things through him who strengthens me.", ref: "Philippians 4:13" },
+                { text: "The steadfast love of the LORD never ceases; his mercies never come to an end; they are new every morning; great is your faithfulness.", ref: "Lamentations 3:22-23" }
+            ];
+
+            // --- STATE MANAGEMENT ---
+            let appData = {};
+            let savingsChart;
+            let calendar;
+            let threeScene, threeCamera, threeRenderer, threeControls, threeLabelRenderer;
+
+            const defaultData = {
+                settings: {
+                    theme: 'light',
+                    liteMode: false
+                },
+                startDate: '2025-08-22',
+                startAge: 24,
+                finances: {
+                    totalSavings: 0,
+                    income: 0,
+                    expenses: 0,
+                    history: [] // { month: 'YYYY-MM', amount: 10000 }
+                },
+                goals: [
+                    { id: 1, text: 'Finish ICT Diploma', date: '2026-04-30', complete: false },
+                    { id: 2, text: 'Job Hunt + Savings Phase', date: '2027-12-31', complete: false },
+                    { id: 3, text: 'Build 2-Bedroom House', date: '2028-12-31', complete: false },
+                    { id: 4, text: 'Farm Setup (Crops & Livestock)', date: '2029-12-31', complete: false },
+                    { id: 5, text: 'Expand Business (Shop, Agrovet, etc.)', date: '2030-12-31', complete: false }
+                ],
+                habits: {
+                    'wake-early': { lastChecked: null, streak: 0 },
+                    'prayer-meditation': { lastChecked: null, streak: 0 },
+                    'exercise': { lastChecked: null, streak: 0 },
+                    'ict-learning': { lastChecked: null, streak: 0 },
+                    'journal-review': { lastChecked: null, streak: 0 },
+                    'track-spending': { lastChecked: null },
+                    'review-goals': { lastChecked: null },
+                    'savings-update': { lastChecked: null }
+                },
+                journal: {}, // { 'YYYY-MM-DD': 'entry' }
+                affirmation: ""
+            };
+
+            const dailyHabitsConfig = [
+                { id: 'wake-early', name: 'Wake Early' },
+                { id: 'prayer-meditation', name: 'Prayer / Meditation' },
+                { id: 'exercise', name: 'Exercise' },
+                { id: 'ict-learning', name: 'ICT Learning / Practice' },
+                { id: 'journal-review', name: 'Journal & Review' }
+            ];
+
+            const weeklyHabitsConfig = [
+                { id: 'track-spending', name: 'Track Spending' },
+                { id: 'review-goals', name: 'Review Goals' },
+                { id: 'savings-update', name: 'Savings Update' }
+            ];
+
+            function saveData() {
+                localStorage.setItem('lifeOSData', JSON.stringify(appData));
+            }
+
+            function loadData() {
+                const data = localStorage.getItem('lifeOSData');
+                appData = data ? JSON.parse(data) : JSON.parse(JSON.stringify(defaultData));
+                appData.settings = { ...defaultData.settings, ...appData.settings };
+                appData.goals = appData.goals || defaultData.goals;
+                appData.habits = { ...defaultData.habits, ...appData.habits };
+            }
+
+            // --- INITIALIZATION ---
+            function init() {
+                loadData();
+                initTheme();
+                initNavigation();
+                initDashboard();
+                initTimeline();
+                initFinance();
+                initDiscipline();
+                initSpiritual();
+                initCalendar();
+                if (!appData.settings.liteMode) {
+                    init3D();
+                } else {
+                    document.getElementById('three-container').innerHTML = 
+                        `<p style="padding: 2rem; text-align: center; color: var(--text-secondary);">
+                            <i class="fas fa-leaf" style="font-size: 2rem; margin-bottom: 1rem;"></i><br>
+                            3D Visualization is disabled in Lite Mode to improve performance.
+                        </p>`;
+                }
+                initSettings();
+            }
+
+            // --- THEME & NAVIGATION ---
+            function initTheme() {
+                const themeToggle = document.getElementById('theme-toggle');
+                if (appData.settings.theme === 'dark') {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    themeToggle.checked = true;
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'light');
+                    themeToggle.checked = false;
+                }
+                themeToggle.addEventListener('change', () => {
+                    if (themeToggle.checked) {
+                        appData.settings.theme = 'dark';
+                        document.documentElement.setAttribute('data-theme', 'dark');
+                    } else {
+                        appData.settings.theme = 'light';
+                        document.documentElement.setAttribute('data-theme', 'light');
+                    }
+                    updateChartTheme();
+                    saveData();
+                });
+            }
+            
+            function initNavigation() {
+                const navLinks = document.querySelectorAll('.nav-link');
+                const pages = document.querySelectorAll('.page');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const targetId = link.getAttribute('href').substring(1);
+
+                        navLinks.forEach(l => l.classList.remove('active'));
+                        link.classList.add('active');
+
+                        pages.forEach(page => {
+                            page.classList.toggle('active', page.id === targetId);
+                        });
+                        
+                        if(targetId === 'calendar' && calendar) calendar.render();
+                        if(targetId === 'land' && threeRenderer) onWindowResize();
+                    });
+                });
+            }
+
+            // --- DASHBOARD ---
+            function initDashboard() {
+                updateDashboard();
+                const today = new Date().getDate();
+                const quote = DAILY_QUOTES[today % DAILY_QUOTES.length];
+                document.getElementById('quote-text').textContent = `"${quote.text}"`;
+                document.getElementById('quote-author').textContent = `— ${quote.author}`;
+            }
+
+            function updateDashboard() {
+                animateCounter('total-savings-display', appData.finances.totalSavings, true);
+                animateCounter('monthly-income-display', appData.finances.income, true);
+                animateCounter('monthly-expenses-display', appData.finances.expenses, true);
+                
+                const disciplineScore = calculateDisciplineScore();
+                document.getElementById('discipline-score-display').textContent = `${disciplineScore.toFixed(0)}%`;
+                
+                const completedGoals = appData.goals.filter(g => g.complete).length;
+                const totalGoals = appData.goals.length;
+                const progress = totalGoals > 0 ? (completedGoals / totalGoals) * 100 : 0;
+                document.getElementById('timeline-progress-bar').style.width = `${progress}%`;
+            }
+            
+            function animateCounter(id, endValue, isCurrency = false) {
+                const element = document.getElementById(id);
+                const startValue = parseFloat(element.textContent.replace(/[^\d.-]/g, '')) || 0;
+                const duration = 1000;
+                let startTime = null;
+
+                function animation(currentTime) {
+                    if (startTime === null) startTime = currentTime;
+                    const progress = Math.min((currentTime - startTime) / duration, 1);
+                    const currentValue = startValue + (endValue - startValue) * progress;
+                    element.textContent = isCurrency ? KSH_FORMATTER.format(currentValue) : currentValue.toFixed(0);
+                    if (progress < 1) {
+                        requestAnimationFrame(animation);
+                    }
+                }
+                requestAnimationFrame(animation);
+            }
+
+            // --- TIMELINE & GOALS ---
+            function initTimeline() {
+                renderTimeline();
+                document.getElementById('add-goal-btn').addEventListener('click', addGoal);
+            }
+
+            function renderTimeline() {
+                const timelineList = document.getElementById('timeline-list');
+                timelineList.innerHTML = '';
+                appData.goals.sort((a,b) => new Date(a.date) - new Date(b.date));
+
+                appData.goals.forEach(goal => {
+                    const ageAtGoal = calculateAge(goal.date);
+                    const item = document.createElement('li');
+                    item.className = `timeline-item ${goal.complete ? 'complete' : ''}`;
+                    item.innerHTML = `
+                        <div class="icon"><i class="fas ${goal.complete ? 'fa-check' : 'fa-flag-checkered'}"></i></div>
+                        <div class="timeline-content">
+                            <h4>${goal.text}</h4>
+                            <div class="meta">
+                                <span>Target: ${new Date(goal.date).toLocaleDateString()}</span> | 
+                                <span>Age: ${ageAtGoal}</span>
+                            </div>
+                            <button class="btn-toggle-complete" data-id="${goal.id}">${goal.complete ? 'Mark as Incomplete' : 'Mark as Complete'}</button>
+                        </div>
+                    `;
+                    timelineList.appendChild(item);
+                });
+
+                document.querySelectorAll('.btn-toggle-complete').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        toggleGoalComplete(parseInt(e.target.dataset.id));
+                    });
+                });
+            }
+            
+            function addGoal() {
+                const textInput = document.getElementById('new-goal-text');
+                const dateInput = document.getElementById('new-goal-date');
+                
+                if (textInput.value.trim() === '' || dateInput.value === '') {
+                    alert('Please provide both a goal description and a target date.');
+                    return;
+                }
+
+                const newGoal = {
+                    id: Date.now(),
+                    text: textInput.value.trim(),
+                    date: dateInput.value,
+                    complete: false
+                };
+                appData.goals.push(newGoal);
+                saveData();
+                renderTimeline();
+                updateCalendarEvents();
+                textInput.value = '';
+                dateInput.value = '';
+            }
+
+            function toggleGoalComplete(id) {
+                const goal = appData.goals.find(g => g.id === id);
+                if (goal) {
+                    goal.complete = !goal.complete;
+                    if(goal.complete) {
+                        showMilestoneModal(`"${goal.text}"`);
+                    }
+                    saveData();
+                    renderTimeline();
+                    updateDashboard();
+                    updateCalendarEvents();
+                }
+            }
+            
+            function calculateAge(dateString) {
+                const birthDate = new Date(appData.startDate);
+                birthDate.setFullYear(birthDate.getFullYear() - appData.startAge);
+                const targetDate = new Date(dateString);
+                let age = targetDate.getFullYear() - birthDate.getFullYear();
+                const m = targetDate.getMonth() - birthDate.getMonth();
+                if (m < 0 || (m === 0 && targetDate.getDate() < birthDate.getDate())) {
+                    age--;
+                }
+                return age;
+            }
+
+            // --- FINANCIAL PLANNER ---
+            function initFinance() {
+                const incomeInput = document.getElementById('income-input');
+                const expensesInput = document.getElementById('expenses-input');
+                
+                incomeInput.value = appData.finances.income || '';
+                expensesInput.value = appData.finances.expenses || '';
+
+                incomeInput.addEventListener('input', updateFinancialCalculations);
+                expensesInput.addEventListener('input', updateFinancialCalculations);
+                document.getElementById('update-savings-btn').addEventListener('click', updateCumulativeSavings);
+
+                initSavingsChart();
+                updateFinancialCalculations();
+            }
+
+            function updateFinancialCalculations() {
+                const income = parseFloat(document.getElementById('income-input').value) || 0;
+                const expenses = parseFloat(document.getElementById('expenses-input').value) || 0;
+                
+                appData.finances.income = income;
+                appData.finances.expenses = expenses;
+
+                const potentialSavings = income - expenses;
+                document.getElementById('monthly-savings-result').textContent = KSH_FORMATTER.format(potentialSavings > 0 ? potentialSavings : 0);
+                
+                document.getElementById('budget-needs').textContent = KSH_FORMATTER.format(income * 0.7);
+                document.getElementById('budget-savings').textContent = KSH_FORMATTER.format(income * 0.2);
+                document.getElementById('budget-wants').textContent = KSH_FORMATTER.format(income * 0.1);
+
+                updateDashboard();
+                saveData();
+            }
+            
+            function updateCumulativeSavings() {
+                const savingsInput = document.getElementById('savings-update-input');
+                const amount = parseFloat(savingsInput.value);
+
+                if (isNaN(amount) || amount <= 0) {
+                    alert('Please enter a valid, positive amount.');
+                    return;
+                }
+
+                appData.finances.totalSavings += amount;
+                
+                const today = new Date();
+                const monthKey = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}`;
+                const monthRecord = appData.finances.history.find(h => h.month === monthKey);
+                if(monthRecord) {
+                    monthRecord.amount += amount;
+                } else {
+                    appData.finances.history.push({ month: monthKey, amount: amount });
+                }
+                
+                saveData();
+                updateDashboard();
+                updateSavingsChart();
+                savingsInput.value = '';
+            }
+
+            function initSavingsChart() {
+                const ctx = document.getElementById('savings-chart').getContext('2d');
+                savingsChart = new Chart(ctx, {
+                    type: 'line',
+                    data: { labels: [], datasets: [{ label: 'Monthly Savings (KSH)', data: [], tension: 0.4, fill: true }] },
+                    options: { responsive: true, scales: {}, plugins: {} }
+                });
+                updateSavingsChart();
+            }
+
+            function updateSavingsChart() {
+                appData.finances.history.sort((a,b) => a.month.localeCompare(b.month));
+                savingsChart.data.labels = appData.finances.history.map(h => h.month);
+                savingsChart.data.datasets[0].data = appData.finances.history.map(h => h.amount);
+                updateChartTheme();
+                savingsChart.update();
+            }
+            
+            function updateChartTheme() {
+                if (!savingsChart) return;
+                const theme = appData.settings.theme || 'light';
+                const gridColor = theme === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
+                const textColor = theme === 'dark' ? '#cdd9e5' : '#2c3e50';
+                const accentPrimary = theme === 'dark' ? 'rgba(88, 166, 255, 1)' : 'rgba(52, 152, 219, 1)';
+                const accentPrimaryBg = theme === 'dark' ? 'rgba(88, 166, 255, 0.2)' : 'rgba(52, 152, 219, 0.2)';
+
+                savingsChart.options.scales = {
+                    y: { ticks: { color: textColor }, grid: { color: gridColor } },
+                    x: { ticks: { color: textColor }, grid: { color: gridColor } }
+                };
+                savingsChart.options.plugins = { legend: { labels: { color: textColor } } };
+                
+                savingsChart.data.datasets[0].borderColor = accentPrimary;
+                savingsChart.data.datasets[0].backgroundColor = accentPrimaryBg;
+                
+                savingsChart.update();
+            }
+
+            // --- 3D VISUALIZATION ---
+            function init3D() {
+                const container = document.getElementById('three-container');
+                if (!container) return;
+                container.innerHTML = '';
+
+                threeScene = new THREE.Scene();
+                threeScene.background = new THREE.Color(appData.settings.theme === 'dark' ? 0x1c2128 : 0xf4f7fa);
+                
+                threeCamera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+                threeCamera.position.set(10, 15, 20);
+
+                threeRenderer = new THREE.WebGLRenderer({ antialias: true });
+                threeRenderer.setSize(container.clientWidth, container.clientHeight);
+                container.appendChild(threeRenderer.domElement);
+                
+                threeLabelRenderer = new THREE.CSS2DRenderer();
+                threeLabelRenderer.setSize(container.clientWidth, container.clientHeight);
+                threeLabelRenderer.domElement.style.position = 'absolute';
+                threeLabelRenderer.domElement.style.top = '0px';
+                container.appendChild(threeLabelRenderer.domElement);
+
+                threeControls = new THREE.OrbitControls(threeCamera, threeLabelRenderer.domElement);
+                threeControls.enableDamping = true;
+
+                const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+                threeScene.add(ambientLight);
+                const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+                directionalLight.position.set(5, 10, 7.5);
+                threeScene.add(directionalLight);
+
+                const plot = new THREE.Mesh(new THREE.PlaneGeometry(30, 15), new THREE.MeshStandardMaterial({ color: 0x5a8a3a }));
+                plot.rotation.x = -Math.PI / 2;
+                threeScene.add(plot);
+
+                function createZone(x, z, width, depth, color, name) {
+                    const zoneGeo = new THREE.BoxGeometry(width, 2, depth);
+                    const zoneMat = new THREE.MeshStandardMaterial({ color: color, transparent: true, opacity: 0.8 });
+                    const zone = new THREE.Mesh(zoneGeo, zoneMat);
+                    zone.position.set(x, 1, z);
+                    threeScene.add(zone);
+
+                    const labelDiv = document.createElement('div');
+                    labelDiv.className = 'label';
+                    labelDiv.textContent = name;
+                    const label = new THREE.CSS2DObject(labelDiv);
+                    label.position.set(0, 2, 0);
+                    zone.add(label);
+                }
+                
+                createZone(0, -6, 30, 3, 0xe74c3c, 'Business Zone');
+                createZone(0, -1.5, 10, 6, 0x3498db, 'Home Zone');
+                createZone(-7.5, 4.5, 15, 6, 0x2ecc71, 'Crops');
+                createZone(7.5, 4.5, 15, 6, 0xf39c12, 'Livestock');
+
+                function animate() {
+                    requestAnimationFrame(animate);
+                    threeControls.update();
+                    threeRenderer.render(threeScene, threeCamera);
+                    threeLabelRenderer.render(threeScene, threeCamera);
+                }
+                animate();
+                
+                window.addEventListener('resize', onWindowResize, false);
+            }
+            
+            function onWindowResize() {
+                const container = document.getElementById('three-container');
+                if (!container || !threeCamera || !threeRenderer) return;
+                threeCamera.aspect = container.clientWidth / container.clientHeight;
+                threeCamera.updateProjectionMatrix();
+                threeRenderer.setSize(container.clientWidth, container.clientHeight);
+                threeLabelRenderer.setSize(container.clientWidth, container.clientHeight);
+            }
+
+            // --- DISCIPLINE TRACKER ---
+            function initDiscipline() {
+                renderHabits();
+            }
+
+            function renderHabits() {
+                const dailyList = document.getElementById('daily-habits-list');
+                const weeklyList = document.getElementById('weekly-habits-list');
+                dailyList.innerHTML = '';
+                weeklyList.innerHTML = '';
+                const todayStr = new Date().toISOString().split('T')[0];
+
+                dailyHabitsConfig.forEach(habit => {
+                    const habitData = appData.habits[habit.id];
+                    const isChecked = habitData.lastChecked === todayStr;
+                    const li = document.createElement('li');
+                    li.className = 'habit-item';
+                    li.innerHTML = `
+                        <label>
+                            <input type="checkbox" data-habit-id="${habit.id}" data-type="daily" ${isChecked ? 'checked' : ''}>
+                            <span>${habit.name}</span>
+                        </label>
+                        <span class="streak">${habitData.streak || 0} day streak 🔥</span>`;
+                    dailyList.appendChild(li);
+                });
+                
+                const weekNumber = getWeekNumber(new Date());
+                weeklyHabitsConfig.forEach(habit => {
+                    const habitData = appData.habits[habit.id];
+                    const isChecked = habitData.lastChecked === weekNumber.toString();
+                    const li = document.createElement('li');
+                    li.className = 'habit-item';
+                    li.innerHTML = `
+                        <label>
+                            <input type="checkbox" data-habit-id="${habit.id}" data-type="weekly" ${isChecked ? 'checked' : ''}>
+                            <span>${habit.name}</span>
+                        </label>`;
+                    weeklyList.appendChild(li);
+                });
+                
+                document.querySelectorAll('#discipline input[type="checkbox"]').forEach(checkbox => {
+                    checkbox.addEventListener('change', handleHabitToggle);
+                });
+            }
+            
+            function handleHabitToggle(e) {
+                const id = e.target.dataset.habitId;
+                const type = e.target.dataset.type;
+                const habitData = appData.habits[id];
+                
+                if(type === 'daily') {
+                    const today = new Date();
+                    const todayStr = today.toISOString().split('T')[0];
+                    const yesterday = new Date(today);
+                    yesterday.setDate(today.getDate() - 1);
+                    const yesterdayStr = yesterday.toISOString().split('T')[0];
+                    
+                    if(e.target.checked) {
+                        habitData.lastChecked = todayStr;
+                        if(habitData.lastChecked === yesterdayStr) {
+                            habitData.streak++;
+                        } else {
+                            habitData.streak = 1;
+                        }
+                    } else {
+                        habitData.lastChecked = null;
+                        habitData.streak = 0;
+                    }
+                } else { // Weekly
+                    const weekNum = getWeekNumber(new Date()).toString();
+                    habitData.lastChecked = e.target.checked ? weekNum : null;
+                }
+                
+                saveData();
+                renderHabits();
+                updateDashboard();
+            }
+
+            function calculateDisciplineScore() {
+                const todayStr = new Date().toISOString().split('T')[0];
+                const weekNum = getWeekNumber(new Date()).toString();
+                let completed = 0;
+                
+                dailyHabitsConfig.forEach(h => {
+                    if (appData.habits[h.id].lastChecked === todayStr) completed++;
+                });
+                weeklyHabitsConfig.forEach(h => {
+                     if (appData.habits[h.id].lastChecked === weekNum) completed++;
+                });
+                
+                const totalHabits = dailyHabitsConfig.length + weeklyHabitsConfig.length;
+                return totalHabits > 0 ? (completed / totalHabits) * 100 : 0;
+            }
+            
+            function getWeekNumber(d) {
+                d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+                d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay()||7));
+                var yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
+                return Math.ceil(( ( (d - yearStart) / 86400000) + 1)/7);
+            }
+
+            // --- SPIRITUAL ANCHOR ---
+            function initSpiritual() {
+                const today = new Date().getDate();
+                const verse = DAILY_VERSES[today % DAILY_VERSES.length];
+                document.getElementById('verse-text').textContent = `"${verse.text}"`;
+                document.getElementById('verse-ref').textContent = verse.ref;
+                
+                const journalEntry = document.getElementById('journal-entry');
+                const todayStr = new Date().toISOString().split('T')[0];
+                journalEntry.value = appData.journal[todayStr] || '';
+                journalEntry.addEventListener('input', () => {
+                    appData.journal[todayStr] = journalEntry.value;
+                    saveData();
+                });
+
+                const affirmationInput = document.getElementById('affirmation-input');
+                affirmationInput.value = appData.affirmation || '';
+                document.getElementById('save-affirmation-btn').addEventListener('click', () => {
+                    appData.affirmation = affirmationInput.value;
+                    saveData();
+                    alert('Affirmation saved!');
+                });
+            }
+            
+            // --- CALENDAR ---
+            function initCalendar() {
+                const calendarEl = document.getElementById('calendar');
+                calendar = new FullCalendar.Calendar(calendarEl, {
+                    initialView: 'dayGridMonth',
+                    headerToolbar: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'dayGridMonth,timeGridWeek,listWeek'
+                    },
+                    events: [],
+                    editable: true,
+                    selectable: true,
+                    select: handleDateSelect,
+                    eventClick: handleEventClick,
+                    eventDrop: handleEventChange,
+                    eventResize: handleEventChange
+                });
+                updateCalendarEvents();
+            }
+
+            function updateCalendarEvents() {
+                if (!calendar) return;
+                const events = appData.goals.map(goal => ({
+                    id: goal.id,
+                    title: goal.text,
+                    start: goal.date,
+                    allDay: true,
+                    backgroundColor: goal.complete ? '#2ecc71' : '#3498db',
+                    borderColor: goal.complete ? '#27ae60' : '#2980b9'
+                }));
+                calendar.removeAllEvents();
+                calendar.addEventSource(events);
+            }
+
+            function handleDateSelect(selectInfo) {
+                let title = prompt('Enter a title for your new event:');
+                if (title) {
+                    const newGoal = {
+                        id: Date.now(),
+                        text: title,
+                        date: selectInfo.startStr,
+                        complete: false
+                    };
+                    appData.goals.push(newGoal);
+                    saveData();
+                    renderTimeline();
+                    updateCalendarEvents();
+                }
+                calendar.unselect();
+            }
+
+            function handleEventClick(clickInfo) {
+                if (confirm(`Do you want to delete the event '${clickInfo.event.title}'?`)) {
+                    appData.goals = appData.goals.filter(goal => goal.id != clickInfo.event.id);
+                    saveData();
+                    renderTimeline();
+                    updateCalendarEvents();
+                }
+            }
+            
+            function handleEventChange(changeInfo) {
+                const goal = appData.goals.find(g => g.id == changeInfo.event.id);
+                if(goal){
+                    goal.date = changeInfo.event.start.toISOString().split('T')[0];
+                    saveData();
+                    renderTimeline();
+                }
+            }
+
+            // --- SETTINGS ---
+            function initSettings() {
+                const liteModeToggle = document.getElementById('lite-mode-toggle');
+                liteModeToggle.checked = appData.settings.liteMode;
+                liteModeToggle.addEventListener('change', () => {
+                    appData.settings.liteMode = liteModeToggle.checked;
+                    saveData();
+                    alert('Setting saved. Please refresh the page for the change to take effect.');
+                });
+
+                document.getElementById('export-data-btn').addEventListener('click', exportData);
+                document.getElementById('import-file-input').addEventListener('change', importData);
+                document.getElementById('reset-data-btn').addEventListener('click', resetData);
+            }
+            
+            function exportData() {
+                const dataStr = JSON.stringify(appData, null, 2);
+                const dataBlob = new Blob([dataStr], { type: 'application/json' });
+                const url = URL.createObjectURL(dataBlob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `LifeOS_Backup_${new Date().toISOString().split('T')[0]}.json`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+            }
+
+            function importData(event) {
+                const file = event.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const importedData = JSON.parse(e.target.result);
+                        if (confirm('Are you sure you want to overwrite all current data with the imported file?')) {
+                            appData = importedData;
+                            saveData();
+                            location.reload();
+                        }
+                    } catch (error) {
+                        alert('Error parsing JSON file. Please ensure it is a valid backup.');
+                    }
+                };
+                reader.readAsText(file);
+            }
+
+            function resetData() {
+                if (confirm('Are you absolutely sure? This will delete all your progress permanently.')) {
+                    localStorage.removeItem('lifeOSData');
+                    location.reload();
+                }
+            }
+            
+            // --- MODAL ---
+            const modal = document.getElementById('milestone-modal');
+            const modalCloseBtn = document.getElementById('modal-close-btn');
+
+            function showMilestoneModal(message) {
+                document.getElementById('modal-message').textContent = `Congratulations on completing: ${message}! Keep up the great work.`;
+                modal.style.display = 'flex';
+            }
+
+            modalCloseBtn.onclick = function() {
+                modal.style.display = 'none';
+            }
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                }
+            }
+
+            // --- LET'S GO ---
+            init();
+        });
     </script>
     <script>
         // Register the Service Worker for offline functionality
@@ -262,6 +979,5 @@
             });
         }
     </script>
-
 </body>
 </html>
